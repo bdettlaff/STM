@@ -1,3 +1,12 @@
-body{
+body,html {
+    height: 85%;
     background-color: #7ba4e5;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
 }
