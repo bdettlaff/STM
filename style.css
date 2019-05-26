@@ -85,6 +85,12 @@ body {
 .login{
     justify-content: center;
     text-align: center;
+    font-size: 120%;
+}
+
+.waiting{
+    text-align: center;
+    font-size: 150%;
 }
 
 .loading{
