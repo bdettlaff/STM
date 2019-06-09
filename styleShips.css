@@ -3,25 +3,6 @@
     display: block !important;
 }
 
-span {
-    display: block;
-    background-color: #B7C22C;
-    color: #2A3F42;
-    width: 100%;
-    font-size: 56px;
-    font-family: Lucida Console;
-    letter-spacing: 10px;
-	margin-top: 40px;
-}
-
-.btn {
-   
-    font-size: 20px;
-    font-family: Lucida Console;
-    background-color: #B7C22C;
-    color: #FFFFE1;
-}
-
 .btn:hover {
     background-color: #22A8B5;
 }
@@ -29,32 +10,25 @@ span {
 .table {
     width: 350px;
     height: 350px;
-    border: 10px solid #FFFFE1;
+    border: 10px solid #000000;
 }
 
 td {
-    border: 1px solid #FFFFE1;
+    border: 1px solid #000000;
 }
 
 td.empty {
-    background-color: #FFFFE1;
+    background-color: #000000;
 }
 
 td.unchecked {
-    background-color: #B7C22C;
+    background-color: #2a8eff;
 }
 
 td.checked {
-    background-color: #22A8B5;
+    background-color: #dbdce1;
 }
 
-#level-label {
-	margin-left: 50px;
-}
-
-b {
-    display: inline-block;
-    font-family: Lucida Console;
-    color: #BAB188;
-	font-size: 40px;
+td.forbidden{
+    background-color: #FF0000;
 }
