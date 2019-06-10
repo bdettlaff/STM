@@ -2,94 +2,111 @@ $(window).on("load", function () {
     $("#win").hide();
     $("#first").hide();
     $("#number-of-clicks").hide();
+    $(".gameView").hide();
 });
 
 $(document).ready(function () {
     let numberOfClicks = 0;
+    let numberOfShots = 0;
     let numberOfPlacedShips = -1;
     let currentLevel;
+    let isGameStarted = false;
 
     $("td").click(function (e) {
-            numberOfPlacedShips++;
-            if (numberOfClicks == 0) {
-                $(this).toggleClass("checked");
+        if (!isGameStarted) {
+            // if (this.className == "unchecked") {
+                numberOfPlacedShips++;
+                console.log(numberOfPlacedShips);
+                if (numberOfClicks == 0) {
+                    $(this).toggleClass("checked");
 
-                $(this).next().toggleClass("checked");
-                numberOfClicks++;
+                    $(this).next().toggleClass("checked");
+                    numberOfClicks++;
 
 
-            }
-
-            if (numberOfClicks == 1 && numberOfPlacedShips == 1) {
-
-                $(this).toggleClass("checked");
-                let down = $(this).parent().next().children().eq($(this).index());
-                if (!down.hasClass("empty")) {
-                    down.toggleClass("checked");
-                }
-                numberOfClicks++;
-            }
-            //3
-
-            if (numberOfClicks == 2 && numberOfPlacedShips == 2) {
-
-                $(this).toggleClass("checked");
-
-                $(this).next().toggleClass("checked");
-                $(this).prev().toggleClass("checked");
-                numberOfClicks++;
-            }
-
-            if (numberOfClicks == 3 && numberOfPlacedShips == 3) {
-
-                $(this).toggleClass("checked");
-
-                let up = $(this).parent().prev().children().eq($(this).index());
-                if (!up.hasClass("empty")) {
-                    up.toggleClass("checked");
                 }
 
-                let down = $(this).parent().next().children().eq($(this).index());
-                if (!down.hasClass("empty")) {
-                    down.toggleClass("checked");
+                if (numberOfClicks == 1 && numberOfPlacedShips == 1) {
+
+                    $(this).toggleClass("checked");
+                    let down = $(this).parent().next().children().eq($(this).index());
+                    if (!down.hasClass("empty")) {
+                        down.toggleClass("checked");
+                    }
                     numberOfClicks++;
                 }
-            }
+                //3
 
-            //4
-            if (numberOfClicks == 4 && numberOfPlacedShips == 4) {
+                if (numberOfClicks == 2 && numberOfPlacedShips == 2) {
 
-                $(this).toggleClass("checked");
+                    $(this).toggleClass("checked");
 
-                $(this).next().toggleClass("checked");
-                $(this).next().next().toggleClass("checked");
-                $(this).prev().toggleClass("checked");
-                numberOfClicks++;
-            }
-
-            if (numberOfClicks == 5 && numberOfPlacedShips == 5) {
-
-                $(this).toggleClass("checked");
-
-                let up = $(this).parent().prev().children().eq($(this).index());
-                if (!up.hasClass("empty")) {
-                    up.toggleClass("checked");
-                }
-
-                let down = $(this).parent().next().children().eq($(this).index());
-                if (!down.hasClass("empty")) {
-                    down.toggleClass("checked");
+                    $(this).next().toggleClass("checked");
+                    $(this).prev().toggleClass("checked");
                     numberOfClicks++;
                 }
 
-                let bot = $(this).parent().next().next().children().eq($(this).index());
-                if (!bot.hasClass("empty")) {
-                    bot.toggleClass("checked");
+                if (numberOfClicks == 3 && numberOfPlacedShips == 3) {
+
+                    $(this).toggleClass("checked");
+
+                    let up = $(this).parent().prev().children().eq($(this).index());
+                    if (!up.hasClass("empty")) {
+                        up.toggleClass("checked");
+                    }
+
+                    let down = $(this).parent().next().children().eq($(this).index());
+                    if (!down.hasClass("empty")) {
+                        down.toggleClass("checked");
+                        numberOfClicks++;
+                    }
+                }
+
+                //4
+                if (numberOfClicks == 4 && numberOfPlacedShips == 4) {
+
+                    $(this).toggleClass("checked");
+
+                    $(this).next().toggleClass("checked");
+                    $(this).next().next().toggleClass("checked");
+                    $(this).prev().toggleClass("checked");
                     numberOfClicks++;
                 }
+
+                if (numberOfClicks == 5 && numberOfPlacedShips == 5) {
+
+                    $(this).toggleClass("checked");
+
+                    let up = $(this).parent().prev().children().eq($(this).index());
+                    if (!up.hasClass("empty")) {
+                        up.toggleClass("checked");
+                    }
+
+                    let down = $(this).parent().next().children().eq($(this).index());
+                    if (!down.hasClass("empty")) {
+                        down.toggleClass("checked");
+                        numberOfClicks++;
+                    }
+
+                    let bot = $(this).parent().next().next().children().eq($(this).index());
+                    if (!bot.hasClass("empty")) {
+                        bot.toggleClass("checked");
+                        numberOfClicks++;
+
+                    }
+                }
+            // }
+        } else {
+            if (this.className === "unchecked") {
+                $(this).toggleClass("checked");
+                numberOfShots++;
+                console.log("Shots = " + numberOfShots )
             }
+
         }
+    }
     );
+
 
     $("#start").click(function () {
 
@@ -132,17 +149,29 @@ $(document).ready(function () {
 
         currentLevel.show();
     });
+
+    $('#button').click(function (e) {
+        if (numberOfPlacedShips >= 5) {
+            console.log("teraz można wysłać")
+            $("#placeShipsTable").attr("id", "placeShipsTableDuringGame");
+            $('#placeShipsView').contents().appendTo('#boxini1')
+            $(".gameView").show();
+            isGameStarted = true;
+        }
+    });
 });
 
-$(document).ready = function() {
+$(document).ready = function () {
     var i = 0;
     var original = document.getElementById('boxini');
 
-    function duplicate() {
-        var clone = original.cloneNode(true); // "deep" clone
-        clone.id = "boxini" + ++i;
-        // or clone.id = ""; if the divs don't need an ID
-        original.parentNode.appendChild(clone);
-    }
+
+    // function duplicate() {
+    // var clone = original.cloneNode(true); // "deep" clone
+    // clone.id = "boxini" + ++i;
+    // // or clone.id = ""; if the divs don't need an ID
+    // original.parentNode.appendChild(clone);
+    // console.log("elo");
+    // }
 }
 

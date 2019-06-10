@@ -3,11 +3,23 @@
     display: block !important;
 }
 
+#placeShipsTableDuringGame{
+    width: 100px;
+    height: 100px;
+}
+
 .btn:hover {
     background-color: #22A8B5;
 }
 
+
 .table {
+    width: 350px;
+    height: 350px;
+    border: 10px solid #000000;
+}
+
+.gameTable {
     width: 350px;
     height: 350px;
     border: 10px solid #000000;
