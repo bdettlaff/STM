@@ -1,98 +1,177 @@
 $(window).on("load", function () {
     $("#win").hide();
     $("#first").hide();
-    $("#second").hide();
-    $("#third").hide();
-    $("#fourth").hide();
-	$("#fifth").hide();
     $("#number-of-clicks").hide();
+    $(".gameView").hide();
 });
 
 $(document).ready(function () {
     let numberOfClicks = 0;
+    let numberOfShots = 0;
+    let numberOfPlacedShips = -1;
     let currentLevel;
-	
-	$("td").click(function (e) {
-        if (!$(this).hasClass("empty")) {
-			
-            $(this).toggleClass("checked");
-			
-            if (!$(this).next().hasClass("empty")){
-				$(this).next().toggleClass("checked");
-			}
-			
-            if (!$(this).prev().hasClass("empty")){
-				$(this).prev().toggleClass("checked");
-			}
-			
-            let up = $(this).parent().prev().children().eq($(this).index());
-            if (!up.hasClass("empty")){
-				up.toggleClass("checked");
-			}
-			
-            let down = $(this).parent().next().children().eq($(this).index());
-            if (!down.hasClass("empty")){
-				down.toggleClass("checked");
-			}
-			
-            numberOfClicks++;
-            $("#clicks").text(numberOfClicks);
+    let isGameStarted = false;
 
-            let wholeJigsawChecked = true;
-            $(currentLevel.name + " td").each(function() {
-               if (!($(this).hasClass("checked") || $(this).hasClass("empty"))) {
-				   wholeJigsawChecked = false;}
-            });
+    $("td").click(function (e) {
+        if (!isGameStarted) {
+            // if (this.className == "unchecked") {
+                numberOfPlacedShips++;
+                console.log(numberOfPlacedShips);
+                if (numberOfClicks == 0) {
+                    $(this).toggleClass("checked");
 
-            if (wholeJigsawChecked) {
-                $("#header").hide();
-                $("#win").show();
-                $("td").each(function() {
-                    $(this).off("click");
-                });
+                    $(this).next().toggleClass("checked");
+                    numberOfClicks++;
+
+
+                }
+
+                if (numberOfClicks == 1 && numberOfPlacedShips == 1) {
+
+                    $(this).toggleClass("checked");
+                    let down = $(this).parent().next().children().eq($(this).index());
+                    if (!down.hasClass("empty")) {
+                        down.toggleClass("checked");
+                    }
+                    numberOfClicks++;
+                }
+                //3
+
+                if (numberOfClicks == 2 && numberOfPlacedShips == 2) {
+
+                    $(this).toggleClass("checked");
+
+                    $(this).next().toggleClass("checked");
+                    $(this).prev().toggleClass("checked");
+                    numberOfClicks++;
+                }
+
+                if (numberOfClicks == 3 && numberOfPlacedShips == 3) {
+
+                    $(this).toggleClass("checked");
+
+                    let up = $(this).parent().prev().children().eq($(this).index());
+                    if (!up.hasClass("empty")) {
+                        up.toggleClass("checked");
+                    }
+
+                    let down = $(this).parent().next().children().eq($(this).index());
+                    if (!down.hasClass("empty")) {
+                        down.toggleClass("checked");
+                        numberOfClicks++;
+                    }
+                }
+
+                //4
+                if (numberOfClicks == 4 && numberOfPlacedShips == 4) {
+
+                    $(this).toggleClass("checked");
+
+                    $(this).next().toggleClass("checked");
+                    $(this).next().next().toggleClass("checked");
+                    $(this).prev().toggleClass("checked");
+                    numberOfClicks++;
+                }
+
+                if (numberOfClicks == 5 && numberOfPlacedShips == 5) {
+
+                    $(this).toggleClass("checked");
+
+                    let up = $(this).parent().prev().children().eq($(this).index());
+                    if (!up.hasClass("empty")) {
+                        up.toggleClass("checked");
+                    }
+
+                    let down = $(this).parent().next().children().eq($(this).index());
+                    if (!down.hasClass("empty")) {
+                        down.toggleClass("checked");
+                        numberOfClicks++;
+                    }
+
+                    let bot = $(this).parent().next().next().children().eq($(this).index());
+                    if (!bot.hasClass("empty")) {
+                        bot.toggleClass("checked");
+                        numberOfClicks++;
+
+                    }
+                }
+            // }
+        } else {
+            if (this.className === "unchecked") {
+                $(this).toggleClass("checked");
+                numberOfShots++;
+                console.log("Shots = " + numberOfShots )
             }
+
         }
-    });
-	
+    }
+    );
+
+
     $("#start").click(function () {
-		
+
         $("#start").hide();
         $("#number-of-clicks").show();
 
         let randomLevel = Math.floor((Math.random() * 5) + 1);
-        switch(randomLevel) {
+        switch (randomLevel) {
             case 1: {
                 currentLevel = $("#first");
                 currentLevel.name = "#first";
-				$("#level").html(1);
-            } 
-			break;
+                $("#level").html(1);
+            }
+                break;
             case 2: {
                 currentLevel = $("#second");
                 currentLevel.name = "#second";
-				$("#level").html(2);
-            } 
-			break;
+                $("#level").html(2);
+            }
+                break;
             case 3: {
                 currentLevel = $("#third");
                 currentLevel.name = "#third";
-				$("#level").html(3);
-            } 
-			break;
+                $("#level").html(3);
+            }
+                break;
             case 4: {
                 currentLevel = $("#fourth");
                 currentLevel.name = "#fourth";
-				$("#level").html(4);
-            } 
-			break;
-			case 5: {
+                $("#level").html(4);
+            }
+                break;
+            case 5: {
                 currentLevel = $("#fifth");
                 currentLevel.name = "#fifth";
-				$("#level").html(5);
-            } 
-			break;
+                $("#level").html(5);
+            }
+                break;
         }
 
         currentLevel.show();
     });
+
+    $('#button').click(function (e) {
+        if (numberOfPlacedShips >= 5) {
+            console.log("teraz można wysłać")
+            $("#placeShipsTable").attr("id", "placeShipsTableDuringGame");
+            $('#placeShipsView').contents().appendTo('#boxini1')
+            $(".gameView").show();
+            isGameStarted = true;
+        }
+    });
 });
+
+$(document).ready = function () {
+    var i = 0;
+    var original = document.getElementById('boxini');
+
+
+    // function duplicate() {
+    // var clone = original.cloneNode(true); // "deep" clone
+    // clone.id = "boxini" + ++i;
+    // // or clone.id = ""; if the divs don't need an ID
+    // original.parentNode.appendChild(clone);
+    // console.log("elo");
+    // }
+}
+
